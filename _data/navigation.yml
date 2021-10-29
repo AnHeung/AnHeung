@@ -1,7 +1,7 @@
 main:
-  - title: "박순재"
-    url: /year-archive/
-  - title: "TAG"
-    url: /test/
-  - title: "Category"
+  - title: "POST"
+    url: /post/
+  - title: "CATEGORIES"
     url: /categories/
+  - title: "ABOUT"
+    url: /about/
