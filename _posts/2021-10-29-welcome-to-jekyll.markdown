@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "최초 게시글"
+title:  "사이트가 블링블링 하다. 박순재가 답이없는 이유"
 date:   2021-10-29 12:33:29 +0900
 categories: jekyll update
 ---
