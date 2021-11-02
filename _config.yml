@@ -273,7 +273,6 @@ compress_html:
   ignore:
     envs: development
 
-
 # Defaults
 defaults:
   # _posts
@@ -283,6 +282,7 @@ defaults:
     values:
       layout: single
       author_profile: false
+      toc: true  
       read_time: true
       comments: true
       share: true
@@ -295,7 +295,10 @@ defaults:
     values:
       layout: single
       author_profile: true
+      sidebar:
+        nav: "main-sidebar"
       read_time: false
       comments: false
       share: true
       related: false
+  

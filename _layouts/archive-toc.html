@@ -1,0 +1,26 @@
+---
+layout: default
+classes: wide
+---
+
+{% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
+  {% include page__hero.html %}
+{% elsif page.header.video.id and page.header.video.provider %}
+  {% include page__hero_video.html %}
+{% endif %}
+
+<div id="main" role="main">
+  {% include sidebar.html %}
+
+  <div class="archive">
+    {% if page.url != "/" and site.breadcrumbs %}
+      {% include my-breadcrumbs.html %}
+    {% endif %}
+    <div id="wholetoc">
+      <div class="memo" hidden data-type="toc"></div>
+      <h1 id="wholetoc__title">Table Of Contents</h1>
+      <div class="wholetoc__opt-list">
+      {{ content }}
+    </div>
+  </div>
+</div>

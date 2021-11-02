@@ -5,3 +5,46 @@ main:
     url: /categories/
   - title: "ABOUT"
     url: /about/
+
+
+main-sidebar:
+  - title: "Code Test"
+    url: "/code_test/"
+    children:
+    - title: "그리디"
+      url: "/code_test/greedy/"
+    - title: "구현"
+      url: "/code_test/implementation/"      
+    - title: "BFS/DFS"
+      url: "/code_test/bfsdfs/"  
+    - title: "정렬"
+      url: "/code_test/sort/"  
+    - title: "이진탐색"
+      url: "/code_test/binary_search/"
+    - title: "Dynamic Programming"
+      url: "/code_test/dynamic/"
+    - title: "최단경로"
+      url: "/code_test/shortest_path/"
+    - title: "Graph"
+      url: "/code_test/graph/"
+  - title: "Android"
+    url: "/android/"
+    children:
+    - title: "RX"
+      url: "/android/rx/"
+  - title: "Kotlin"
+    url: "/kotlin/"
+    children:
+    - title: "문법"
+      url: "/kotlin/grammer/" 
+  - title: "Flutter"
+    url: "/flutter/"
+    children:
+    - title: "Bloc"
+      url: "/mathematics/linear-algebra/"
+  - title: "JavaScript"
+    url: "/data-engineering/"
+    
+
+
+
