@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "연구소"
+title: "코딩테스트 - 연구소"
 ---
 
 문제

@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "음료수 얼려먹기"
+title: "코딩테스트 - 음료수 얼려먹기"
 ---
 
 문제

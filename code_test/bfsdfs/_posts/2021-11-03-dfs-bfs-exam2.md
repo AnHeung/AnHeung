@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "미로 탈출"
+title: "코딩테스트 - 미로 탈출"
 ---
 미로 탈출
 ===
