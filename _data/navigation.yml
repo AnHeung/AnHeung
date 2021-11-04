@@ -35,15 +35,25 @@ main-sidebar:
   - title: "Kotlin"
     url: "/kotlin/"
     children:
-    - title: "문법"
-      url: "/kotlin/grammer/" 
+    - title: "Class"
+      url: "/kotlin/class/"
+    - title: "Interface"
+      url: "/kotlin/interface/"      
+    - title: "NullSafety"
+      url: "/kotlin/null-safety/"  
+    - title: "Generic"
+      url: "/kotlin/generic/"  
+    - title: "Function"
+      url: "/kotlin/function/"
+    - title: "Exception"
+      url: "/kotlin/exception/"
   - title: "Flutter"
     url: "/flutter/"
     children:
     - title: "Bloc"
-      url: "/mathematics/linear-algebra/"
-  - title: "JavaScript"
-    url: "/data-engineering/"
+      url: "/flutter/bloc/"
+  - title: "NodeJs"
+    url: "/nodejs/"
     
 
 
