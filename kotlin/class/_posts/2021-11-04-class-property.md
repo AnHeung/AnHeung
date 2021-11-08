@@ -111,7 +111,7 @@ const 를 쓰기 위해선 몇가지 수행조건이 있는데
 - 커스텀 getter를 설정 할 수 없다.
 
 const 를 쓰면 실제 내부에 클래스에 static final 변수명 으로 설정됨을 알 수 있다.
-자세한 내용은 해당부분을 참조하면 되겠다. [Kotlin에는 Static이 존재하지 않는다.](/kotlin/class/kotlin-static)
+자세한 내용은 해당부분을 참조하면 되겠다. [Kotlin에는 Static이 존재하지 않는다.](/kotlin/class/kotlin-static/#constants-상수)
 
 
 ### Late-initialized properties and variables
@@ -174,7 +174,7 @@ public final boolean isInitialize() {
 ```
 
 
-### 링크
+### 참조
 
 [https://kotlinlang.org/docs/properties.html](https://kotlinlang.org/docs/properties.html)
 
