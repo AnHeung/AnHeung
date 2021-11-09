@@ -37,8 +37,8 @@ main-sidebar:
     children:
     - title: "Class"
       url: "/kotlin/class/"     
-    - title: "NullSafety"
-      url: "/kotlin/null-safety/"  
+    - title: "Coroutine"
+      url: "/kotlin/coroutine/"  
     - title: "Generic"
       url: "/kotlin/generic/"  
     - title: "Function"

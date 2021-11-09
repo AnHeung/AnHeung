@@ -14,7 +14,7 @@ title: "Kotlin에서 DSL 사용하기 파트1"
 만든다는게 아니라 kotlin 자체로 명시적으로 설정 하는것이다. 여기선 밑의 3가지를 사용할 것이다.
 
 - 메소드 괄호 외부에서 람다 사용
-- Lambda with receiver
+- [Lambda with receiver](/kotlin/function/lambda-with-receiver/)
 - 확장 함수
 
 DSL을 사용함에 있어 위의 것들은 불필요한 기호를 사용하지 않도록 깔끔한 문법을 제공해준다.
@@ -153,7 +153,6 @@ val person = person {
     }
 }
 ```
-
 
 ### 참조
 
