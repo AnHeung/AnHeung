@@ -17,7 +17,7 @@ title: "Kotlin에서 DSL 사용하기 파트1"
 - Lambda with receiver
 - 확장 함수
 
-즉 우리가 아는 코틀린 자체만 사용하고 불필요한 기호를 사용하지 않도록 깔끔한 문법을 제공해준다는 이점이 있다.
+DSL을 사용함에 있어 위의 것들은 불필요한 기호를 사용하지 않도록 깔끔한 문법을 제공해준다.
 
 ### DSL 써보기
 
@@ -50,7 +50,7 @@ data class Address(var street: String? = null,
 ### 메소드 괄호 외부에서 람다 사용
 
 생성자를 통해 Person 객체를 만들고  Person의 프로퍼티는 코드 내부에서 정의하고 있다.
-위에서 설명한 `메소드 괄호 외부에서 람다 사용` 을 이용 하였다.
+위에서 설명한 `메소드 괄호 외부에서 람다`를 사용 하였다.
 
 ```java
 fun person(block: (Person) -> Unit): Person {
@@ -70,7 +70,7 @@ val person = person {
 ```
 
 위에 person 함수는 람다 block을 인자로 받는데 위에 정의했듯 Person 을 인자로 받고 
-어떤 동작을 수행하고 Unit 타입을 반환하는 람다를 인자로 받는다. 코틀린 코딩 스타일 가이드를 보면 
+어떤 동작을 수행하고 Unit 타입을 반환하는 람다를 인자로 받는다. [코틀린 스타일 가이드](https://kotlinlang.org/docs/coding-conventions.html#lambdas)를 보면 
 인자로 받는 람다는 소괄호 안으로 중괄호를 넣거나 소괄호 밖으로 중괄호를 빼거나 소괄호도 쓰지말고 중괄호만 쓰는 방식 3가지로 표현할수 있는데 여기선 DSL을 사용해 간결하게 표현해야 하므로 중괄호만 표기한것이다.
 
 ```java

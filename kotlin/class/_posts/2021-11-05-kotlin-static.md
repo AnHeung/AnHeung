@@ -4,17 +4,13 @@ title: "Kotlin에는 Static이 존재하지 않는다."
 ---
 
 
-### static은 어디로 갔을까? 그리고 왜 사라졌을까?
+### Static은 어디로 갔을까? 그리고 왜 사라졌을까?
 
-최근 현대 언어들은 static 이 `primitive type` 의 명시적 지원중단 같은 이유로
+최근 현대 언어들은 static 이 `Primitive Type` 의 명시적 지원중단 같은 이유로
 static을 삭제 했다. 
 
 자바의 static 의 경우 필드와 메소드가 그들의 인스턴스가 아닌 클래스를 통해 접근이 가능하다.
 static 멤버들은 instance 멤버들과 분리되어 있는것이다. 그리고 다른 규칙으로 적용된다.
-
-
-그리고 실제 해당 코드들은 디컴파일 해보면 내부 클래스 안에 static final 로 값이
-설정 되어있다.
 
 ||Instance methods|Static methods|
 |---|---|---|
@@ -31,14 +27,14 @@ static 멤버들은 instance 멤버들과 분리되어 있는것이다. 그리�
 
 결국 Kotlin 은 static이 존재 하지 않는다. 대신에 이것들을 활용해야 한다.
 
-- Top-level Function
-- Top-level Constants
-- Companion Object Functions
+- Top-Level Function
+- Constants
 - Object Instance
+- Companion Objects
 
-### Top-level function
+### Top-Level Function
 
-자바의 경우 클래스 내부에 정의했겟지만 코틀린은 top-level function을 제공한다. 
+자바의 경우 클래스 내부에 정의했겟지만 코틀린은 Top-Level Function 을 제공한다. 
 어디든 .kt 파일에 정의하면 소스가 내부에서 자동 생성된다.
 
 *Kotlin*
@@ -59,7 +55,7 @@ public final class TopLevelFunctionKt {
 
 ```
 
-자바내부적으로 파일명Kt 라는 클래스를 만들어 static 변수와 함수를 만들어준다.
+자바 내부적으로 파일명Kt 라는 클래스를 만들어 static 변수와 함수를 만들어준다.
 이러한 점을 활용해 여러가지에 응용할 수 있다. 예를 들면 유틸 클래스를 대체할수 있다.
 확장함수까지 사용하면 더 유용하게 사용할 수 있지만 여기서는 다루지 않는다.
 
@@ -77,47 +73,74 @@ public class StringUtils {
 
 *Java*
 ```java
-package toplevel
+package topLevel
 
 fun lowerCaseCount(value: String): Int = value.count { it.isLowerCase() }
 
 ```
 
-Top-level function 과 프로퍼티는 패키지와 연관되어있다. 즉 2개의 Top-level function 와 프로퍼티를 
+Top-Level Function 과 프로퍼티는 패키지와 연관되어있다. 즉 2개의 Top-Level Function 와 프로퍼티를 
 같은 이름으로 같은 패키지의 다른파일에서 생성할수는 없다. 
 
 
 ### Constants (상수)
 
-프로퍼티 또한 top-level 에 선언이 가능하다. 자바에서는 보통 상수나 변하지 않는 값을 위해 설정한다.
+프로퍼티 또한 Top-Level 에 선언이 가능하다. 하지만 자바랑 다르게 상수나 변하지 않는 값(val) 만 
+사용하는걸 권장한다.
 
 *Kotlin*
 
 *TopLevelFunction.kt*
 ```java
-var topLevelVar: Int = 0
+const val CONSTANT_STRING = "CONSTANT"
+val READONLY_LIST = listOf("value1", "value2")
+
+// NOT OK: avoid public mutable top-Level properties
+var mutableValue = "currentValue"
+val mutableList = mutableListOf("value1", "value2")
 ```
 
 *Java*
 ```java
 public final class TopLevelFunctionKt {
-   private static int topLevelVar;
+   @NotNull
+   public static final String CONSTANT_STRING = "CONSTANT";
+   @NotNull
+   private static final List READONLY_LIST = CollectionsKt.listOf(new String[]{"value1", "value2"});
+   @NotNull
+   private static String mutableValue = "currentValue";
+   @NotNull
+   private static final List mutableList = CollectionsKt.mutableListOf(new String[]{"value1", "value2"});
 
-   public static final int getTopLevelVar() {
-      return topLevelVar;
+   @NotNull
+   public static final List getREADONLY_LIST() {
+      return READONLY_LIST;
    }
 
-   public static final void setTopLevelVar(int var0) {
-      topLevelVar = var0;
+   @NotNull
+   public static final String getMutableValue() {
+      return mutableValue;
+   }
+
+   public static final void setMutableValue(@NotNull String var0) {
+      Intrinsics.checkNotNullParameter(var0, "<set-?>");
+      mutableValue = var0;
+   }
+
+   @NotNull
+   public static final List getMutableList() {
+      return mutableList;
    }
 }
 
 ```
 
-함수와 마찬가지로 파일명Kt로 클래스가 생성되고 var로 설정해뒀으므로 `getter/setter` 가 구성된다.
-만약 Kt가 붙는게 싫으면 annotation `@file:JvmName:` 을 사용하면 된다.
+만약 Kt가 붙는게 싫으면 package 위쪽에 
+annotation `@file:JvmName:` 을 사용하면 된다.
 
-### Object singletons 
+> ex) @file:JvmName("TopLevelFunction")
+
+### Object singleton 
 
 코틀린은 Object 선언을 통해 싱글톤 패턴을 지원한다. 
 
@@ -159,9 +182,9 @@ object LowerCaseCounter : Counter { // can implement an interface
 object UpperCaseCounter : Counter { // another implementation of the same interface
     override fun count(value: String) = value.count { it.isUpperCase() }
 }
-//
+
 fun main() {
-    // functions on singleton objects can be called like Java static methods
+    // Functions on singleton objects can be called like Java static methods
     println(LowerCaseCounter.count("Hello World")) // prints 8
     println(UpperCaseCounter.count("Hello World")) // prints 2
     // But singletons are values and can be assigned to variables and passed as arguments
@@ -288,7 +311,7 @@ class Rocket private constructor() {
     companion object {
         fun build(): Rocket {
             val rocket = Rocket()  // can call private constructor
-            rocket.ready() // can call private function
+            rocket.ready() // can call private Function
             return rocket
         }
     }
@@ -342,10 +365,11 @@ private 으로 생성자를 만들경우 해당 Rocket 클래스는 외부에선
 보통 `Builder Pattern`에서 자주 쓰이는 방식인데 외부에서 직접 해당 클래스의 생성자를 만드는게 아니라
 내부 클래스의 build 메소드를 통해 해당 클래스의 인스턴스를 얻는것이다. 여기선 `Companion Object`를 사용해 
 내부에 static class 를 구현하고 코틀린상에선 Rocket 으로 접근해도 build 메소드에 접근할수 있다.
-물론 실제로는 `Rocket.Companion.build()` 지만 코틀린자체에선 생략해서 `Rocket.build()`로 표기하거나 
-`Rocket.Companion.build()` 해도 상관없다 으로 붙여도 상관없다.
+물론 실제로는 `Rocket.Companion.build()` 지만 코틀린자체에선 생략해서
+`Rocket.build()`로 표기하거나 `Rocket.Companion.build()` 해도 상관없다 으로 붙여도 상관없다.
 만약 함수에 `@JvmStatic` 을 붙일 경우 자바에서도 Rocket.Companion이 아닌 Rocket 으로 바로 붙을 수 있다.
 
+*Kotlin*
 ```java
 companion object {
         @JvmStatic
@@ -356,15 +380,17 @@ companion object {
         }
     }
 ```
-
+*Java*
 ```java
 Rocket rocket = Rocket.build();
 ```
 
+
+
 ### 결론
 
-static 을 제거함으로 Kotlin은 개념이 혼동하는걸 피하고 더 강력하고(Singleton , Companion 객체) 
- 더 적게 표기하지만 같은 기능 (top-level functions and properties 등)을 사용할 수 있다.
+static 을 제거함으로 Kotlin은 개념이 섞이는걸 피하고 더 강력하고(Object , Companion 객체) 
+ 더 적게 표기하지만 같은 기능 (Top-Level Functions And Properties 등)을 사용할 수 있다.
 하지만 코틀린을 처음 사용하는 경우 static을 사용하는 유즈케이스 등을 통해 익숙해고 배울 필요가 있다.
 
 ### 참조

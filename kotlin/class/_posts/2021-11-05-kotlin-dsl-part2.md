@@ -203,15 +203,16 @@ class AddressBuilder {
 }
 ```
 
-이제 위의 person 처럼 내부 람다에서 외부람다의 값을 수정시
+이제 위의 person 처럼 내부 람다에서 외부람다의 값을 수정시  
+밑에와 같은 컴파일 오류가 발생한다.
 
-> <span style="color:red">fun addresses(block: ADDRESSES.() -> Unit): Unit' can't be called in this context by implicit receiver. Use the explicit one if necessary</span> 라는 컴파일 오류가 뜬다.
+> <span style="color:red">fun addresses(block: ADDRESSES.() -> Unit): Unit' can't be called in this context by implicit receiver. Use the explicit one if necessary</span> 
 
 
 ### 실사용 사례 GsonBuilder 간략하게 만들기
 
 serializing 과 deserializing 를 위한 gson 인스턴스를 만들기를 원할때 gson 자체에서 
-내부적으로 설정할수 있도록 GsonBuilder 를 제공한다. 그러나 만약 둘중 직렬화든 역직렬화 부분을
+내부적으로 설정할수 있도록 GsonBuilder 를 제공한다. 그러나 직렬화 혹은 역직렬화 부분을
 건너뛰고 싶은 경우 상당히 지저분해 진다.
 
 ```java

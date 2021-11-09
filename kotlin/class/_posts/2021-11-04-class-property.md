@@ -65,7 +65,7 @@ setter도 이와 비슷한데 직접 커스텀한다면 val 대신 변수인 var
 값을 받아야 한다는 차이가 있다.
 (setter 를 쓴다는 개념 자체가 값이 변할 수 있다는 개념이라 val 로 할순없다.)
 
-이런식으로 선언도 되는데 여기서 field는 자기자신값 여기서는 age 가 되겠다.
+여기서 field는 자기자신값 여기서는 age 가 되겠다.
 그리고 set에 들어가는 value는 set함수에 넘기는 파라미터다. 
 실제 디컴파일 해보면 쉽게 알 수 있다.
 
@@ -101,21 +101,21 @@ public final class Person {
 }
 ```
 
-### Compile-time constants
-
+### Compile-Time Constants
+---
 읽기 전용 프로퍼티 (val)가 컴파일시 지정되려면 `const` 제어자를 사용하면 된다.  
 const 를 쓰기 위해선 몇가지 수행조건이 있는데
 
-- `top-level` 프로퍼티로만 사용 가능하거나 `object` 선언 또는 `Companion Object` 에서만 쓸 수 있다. 
+- `Top-Level` 프로퍼티로만 사용 가능하거나 `Object` 선언 또는 `Companion Object` 에서만 쓸 수 있다. 
 - String 이나 다른 primitive 타입으로만 초기화 해야한다.
 - 커스텀 getter를 설정 할 수 없다.
 
 const 를 쓰면 실제 내부에 클래스에 static final 변수명 으로 설정됨을 알 수 있다.
-자세한 내용은 해당부분을 참조하면 되겠다. [Kotlin에는 Static이 존재하지 않는다.](/kotlin/class/kotlin-static/#constants-상수)
+선언부분과 실제 자바코드로 어떻게 나오는지는  해당부분을 참조하면 되겠다. [Kotlin에는 Static이 존재하지 않는다.](/kotlin/class/kotlin-static/#constants-상수)
 
 
 ### Late-initialized properties and variables
-
+---
 보통의 프로퍼티는 생성자에서 non-null 타입으로 반드시 초기화가 되서 선언되어야 하지만
 이것은 종종 불편할때가 많다.
 

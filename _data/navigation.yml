@@ -36,9 +36,7 @@ main-sidebar:
     url: "/kotlin/"
     children:
     - title: "Class"
-      url: "/kotlin/class/"
-    - title: "Interface"
-      url: "/kotlin/interface/"      
+      url: "/kotlin/class/"     
     - title: "NullSafety"
       url: "/kotlin/null-safety/"  
     - title: "Generic"
