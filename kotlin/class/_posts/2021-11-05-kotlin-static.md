@@ -42,7 +42,6 @@ static 멤버들은 instance 멤버들과 분리되어 있는것이다. 그리�
 *TopLevelFunction.kt*
 ```java
 fun topLevelTest() {}
-
 ```
 
 *Java*
