@@ -1,12 +1,13 @@
 ---
-title: "이 블로그 설명서"
+title: "About"
 permalink: /about/
 layout: single
 ---
 
-## AnHeung.github.io 블로그
+## 이 블로그는 개인용 공부 블로그 입니다.
 
-이 블로그는 GitHub Pages 블로그 서비스인 github.io를 같이 만들어보는 샘플 블로그이다.
+안드로이드 개발자 (쿠마) 입니다.
 
-이 곳에서 이 샘플 블로그를 같이 만들어보는 GitHub Pages 블로그 따라하기 시리즈의
-모든 글을 볼 수 있다.
+[GitHub 주소 : https://github.com/AnHeung](https://github.com/AnHeung) 
+
+
