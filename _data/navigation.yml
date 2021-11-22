@@ -32,6 +32,8 @@ main-sidebar:
     children:
     - title: "RX"
       url: "/android/rx/"
+    - title: "koin"
+      url: "/android/koin/"
   - title: "Kotlin"
     url: "/kotlin/"
     children:
