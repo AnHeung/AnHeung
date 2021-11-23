@@ -27,9 +27,9 @@ SOLID 5원칙 중 클래스는 구체화가 아니라 추상화에 의존해야�
 {% include image.html id="1-V913lD1WN5Qb9dQFUYcLt0QInSIptMV"%}
 
 Koin을 이해하기 앞서 위의 그림처럼 아키텍쳐를 개발을 한다 가정하자.
-Activity는 ViewModel에 대한 참조를 가지고 ViewModel은 Retrofit 을 사용해 서버에서 데이터를 
-검색하는 remote Data 부분과 로컬에서 DB를 사용하는 Room 두부분의 인스턴스를 가지며 조율하는 
-repository에 대한 참조를 가진다. 이 예제에서 코인을 통해 이런 의존성을 효율적으로 관리하는 걸 배운다.
+Activity는 ViewModel에 대한 참조를 가지고 ViewModel은 repository에 대한 참조를 가진다. 
+repository 는 로컬쪽과 서버(remote)쪽에 대한 비지니스 로직을 처리해주는 인스턴스들의 참조를 가진다. 
+이 예제에서 Koin 을 통해 이런 의존성을 효율적으로 관리하는 걸 알아보자.
 
 #### 1. Gradle 에 Dependencies 추가
 
@@ -67,7 +67,7 @@ interface UserApi {
     fun getAllUsersAsync(): Deferred<List<GithubUser>>
 }
 ```
-GitHub에서 user 정보를 가져올 Api 클래스이다. 코루틴을 사용해 Deffered 타입으로 가져올것이다.
+GitHub에서 user 정보를 가져올 Api 클래스이다. 코루틴의 async를 사용하기 위해 Deffered 타입으로 가져올것이다.
 
 ```java
 class UserRepository(private val userApi: UserApi, private val userDao: UserDao) {
@@ -82,44 +82,36 @@ class UserRepository(private val userApi: UserApi, private val userDao: UserDao)
     }
 }
 ```
-UserRepository 클래스다. 전체적으로 remote(Github API) 쪽 처리와 로컬 DB 쪽 처리에 대한 대행자 역할을 한다. refresh 메소드를 통해 외부 API 와 통신하고 결과물을 DB에 담는다.
+UserRepository 클래스다. 전체적으로 remote(Github API) 쪽 처리와 로컬 DB 쪽 처리에 대한 대행자 역할을 한다. repository 는 실제 수행을 하는쪽이 아니라 대행을 해주는쪽이라 서버쪽과 디비쪽 처리를 해주는 인스턴스들의 참조들을 가진다.
 
 ```java
-class UserViewModel(private val repo: UserRepository) : ViewModel(), Callback<List<GithubUser>> {
-    
+class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
+
     private val _loadingState = MutableLiveData<LoadingState>()
     val loadingState: LiveData<LoadingState>
         get() = _loadingState
 
-    private val _data = MutableLiveData<List<GithubUser>>()
-    val data: LiveData<List<GithubUser>>
-        get() = _data
+    val data = userRepository.data
 
     init {
         fetchData()
     }
 
     private fun fetchData() {
-        _loadingState.postValue(LoadingState.LOADING)
-        repo.getAllUsers().enqueue(this)
-    }
-
-    override fun onFailure(call: Call<List<GithubUser>>, t: Throwable) {
-        _loadingState.postValue(LoadingState.error(t.message))
-    }
-
-    override fun onResponse(call: Call<List<GithubUser>>, response: Response<List<GithubUser>>) {
-        if (response.isSuccessful) {
-            _data.postValue(response.body())
-            _loadingState.postValue(LoadingState.LOADED)
-        } else {
-            _loadingState.postValue(LoadingState.error(response.errorBody().toString()))
+        viewModelScope.launch {
+            try {
+                _loadingState.value = LoadingState.LOADING
+                userRepository.refresh()
+                _loadingState.value = LoadingState.LOADED
+            } catch (e: Exception) {
+                _loadingState.value = LoadingState.error(e.message)
+            }
         }
     }
 }
 ```
-UserViewModel 클래스다. 실제 뷰를 대신해서 비지니스 로직쪽을 수행해주는 대리자 역할을 한다.
-처리후에 뷰에선 ViewModel 의 프로퍼티를 통해 상태의 변화를 받아서 뷰를 처리한다.
+UserViewModel 클래스다. 실제 View 를 대신해서 비지니스 로직쪽을 수행을 해주는 대리자 역할을 한다.
+처리후에 View 에선 ViewModel 의 프로퍼티를 통해 View 는 상태의 변화를 받아서 렌더링한다.
 
 ```java
 data class LoadingState private constructor(val status: Status, val msg: String? = null) {
@@ -141,7 +133,7 @@ loading 에 대한 상태를 표시할 LoadingState 로딩중, 성공 ,실패 3�
 #### 4. koin 모듈 정의하기
 
 koin 에서 모듈은 다른 구성요소에 주입하기 위한 모든 의존성을 선언하는 곳이다.
-예를 들어 뷰모델은 액티비티에서 사용되어진다. 그러므로 우리는 viewModel 인스턴스를 모듈에 선언한다. 이렇게 함으로 Boiler Plate Code 가 줄고 기본적으로 우리가 원할때 인스턴스를 선언할수 있게된다.
+위에 내용처럼 repository는 ViewModel이 ViewModel은 View에서 참조가 이루어진다. 그러므로 우리는 미리 모듈을 통해 사용할 인스턴스들에 대한 정의를 하고 이렇게 함으로 `Boiler Plate Code` 가 줄고 기본적으로 우리가 원할때 인스턴스를 선언할수 있게된다.
 
 ```java
 val viewModelModule = module {
@@ -210,16 +202,19 @@ val repositoryModule = module {
 val moduleList = listOf(viewModelModule,apiModule , netModule, databaseModule , repositoryModule)
 ```
 
-`viewmodel` : ViewModel 을 선언하기 위한 컴포넌트다. Android Component lifecycle 에 바인딩된다.
+`viewmodel` : ViewModel 을 선언하기 위한 컴포넌트다. 반드시 `android.arch.lifecycle.ViewModel`를 확장한 ViewModel 에만 사용해야 한다. inject 시 by viewModel 를 사용해 늦은 초기화를 할수도 있고 getViewModel 를 사용해 즉시 받을수도 있다.
 
-`get()` : 여기서는 UserViewModel 클래스는 UserRepository가 파라미터로 인스턴스가 필요하다. 즉 우리가 get() 을 선언하고 코인은 해당 인스턴스를 검색하고 공급해준다. 반면 Koin 이 해당 인스턴스를 못찾으면 에러가 발생한다.
+`get()` : 여기서는 UserViewModel 클래스는 UserRepository가 파라미터로 인스턴스가 필요하다. 즉 우리가 get() 을 선언하고 Koin은 해당 인스턴스를 검색하고 공급해준다. 반면 Koin 이 해당 인스턴스를 못찾으면 에러가 발생한다.
 
-`single` : 코인에게 인스턴스를 싱글톤으로 만들것을 정해준다. 어플리케이션 수행동안 딱 한번만 만들어진다.
+`single` : Koin 에게 인스턴스를 Singleton 으로 만들라 지정한다. 어플리케이션 수행동안 딱 한번만 만들어진다.
+
+`factory` :  single 과 반대로 매 순간 새로운 인스턴스를 만들어준다. 위의 예시에선 사용하지 않았지만 매번
+새로운 인스턴스가 필요한 부분은 factory 로 만들자.
 
 #### 5. Koin 시작하기
 ---
 
-이제 우리 앱에서 Koin을 시작해보자 . application 클래스를 열고 startKoin() 함수를 호출하자
+이제 우리 앱에서 Koin을 시작해보자 . Application 클래스의 onCreate에  startKoin() 함수를 호출하자.
 그리고 위에 선언한 모듈들을 리스트에 담자.
 
 ```java
@@ -238,7 +233,7 @@ class App : Application() {
 #### 6. Dependencies 주입
 
 UserViewModel 컴포넌트는 UserRepository 파라미터와 같이 만들어진다. 해당 인스턴스를 MainActivity 에서
-by viewModel() delegate Injector 를 통해 주입이 된다.
+by viewModel() Delegate Injector 를 통해 주입이 된다.
 
 ```java
 class MainActivity : AppCompatActivity() {
@@ -248,14 +243,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        userViewModel.data.observe(this, Observer {
-            // Populate the UI
+        
+        userViewModel.data.observe(this , {
+            it.forEach { githubUser ->  showToast(githubUser.login) }
         })
 
         userViewModel.loadingState.observe(this, Observer {
-            // Observe the loading state
+            when(it.status){
+                LoadingState.Status.FAILED -> showToast(it.msg)
+                LoadingState.Status.RUNNING -> showToast("Loading")
+                LoadingState.Status.SUCCESS -> showToast("Success")
+            }
         })
     }
+    
+    private fun showToast(msg:String?) = Toast.makeText(applicationContext , msg ?:"메시지", Toast.LENGTH_LONG).show()
 }
 ```
+
+### 결론
+
+Koin 은 순수 코틀린으로 만든 Dagger 와 다르게 컴파일이 아닌 런타임에서 리플렉션을 사용한 DI 라이브러리로 DSL 를 사용해 읽고 이해하기 쉽게 구성할수 있다. 
