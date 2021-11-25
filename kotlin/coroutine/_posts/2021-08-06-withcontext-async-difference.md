@@ -4,7 +4,7 @@ title : withContext 와 async 의 차이점
 ---
 
 ### withContext 와 async 둘은 유사하면서 다른점을 가지고 있다.
-
+---
 코루틴은 골치아프게 반응형 스타일 코딩의 번거로움 없이 비동기코드를 유창한 API를 사용해 순차적으로 다룰수 있게 해주는 도구다. 코루틴은 CoroutineContext 안에서 동작하고 Context는 몇몇 CoroutineContext.Elements로
 구성되있다. 기본 Element로는 CoroutineId, CoroutineName, CoroutineDispatcher, Job 등이 있다.
 
@@ -18,7 +18,7 @@ CoroutineScope 의 확장함수다. 그리고 그것들의 CoroutineContext 를 
 
 
 ### async-await 란 무엇인가?
-
+---
 async 는 CoroutineScope 의 확장함수로 새로운 취소가능한 코루틴을 만든다. 
 Deferred 객체를 반환하고 코드 블록의 미래의 결과를 가지고 있다. 
 
@@ -41,7 +41,7 @@ public fun <T> CoroutineScope.async(
 각각 독립적 작업으로 동시적 수행이 가능하고 결과를 반환받기를 원한다면 await() 사용해 기다릴 수 있다.
 
 ### withContext 란 무엇인가?
-
+---
 withContext 는 취소가능한 새로운 코루틴을 허용해주는 scope 함수다. 
 
 ```java
@@ -90,5 +90,5 @@ CoroutineContext 를 파라미터로 넘기면 async 같은 경우는 새 Corout
 
 
 ### 참고
-
+---
 [https://www.baeldung.com/kotlin/withcontext-vs-async-await](https://www.baeldung.com/kotlin/withcontext-vs-async-await)

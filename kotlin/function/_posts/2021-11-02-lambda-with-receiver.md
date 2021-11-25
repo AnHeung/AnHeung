@@ -4,7 +4,7 @@ title : Lambda With Receiver
 ---
 
 ### 리시버가 있는 람다함수
-
+---
 lambda with a receiver 는 간결하고 읽기 좋게 만들어준다. 
 DSL 같은 구조적 언어에 적절하고 중첩 구조를 짜기 좋은 기능들을 제공한다.
 
@@ -93,11 +93,11 @@ public inline fun <T> T.apply(block: T.() -> Unit): T {
 동일한 객체를 반환받는 함수다.
 
 ### 리시버가 있는 람다로 DSL 구축
-
+---
 해당부분은 [Kotlin에서 DSL 사용하기](/kotlin/class/kotlin-dsl-part1/) 을 참조하세요.
 
 ### 참조
-
+---
 [https://medium.com/tompee/idiomatic-kotlin-lambdas-with-receiver-and-dsl-3cd3348e1235](https://medium.com/tompee/idiomatic-kotlin-lambdas-with-receiver-and-dsl-3cd3348e1235)
 
 

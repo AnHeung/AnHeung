@@ -127,5 +127,5 @@ Found Spock
 익명함수에서 가장 근접한 함수는 익명함수 선언문에 있어서 해당 부분에서 return 되었다.
 
 ### 참조
-
+---
 [https://medium.com/tompee/idiomatic-kotlin-lambdas-and-control-flows-70a7a58d7a20](https://medium.com/tompee/idiomatic-kotlin-lambdas-and-control-flows-70a7a58d7a20)

@@ -4,14 +4,14 @@ title : CoroutineContext 와 Dispatcher
 ---
 
 ### 코루틴이란?
-
+---
 코루틴은 협력적 멀티태스킹을 하기 위한 서브루틴 혹은 프로그램이다. 
 코루틴은 중단과 재개를 할 수 있고 다른 코루틴에게 양보도 가능하다. 여기서 중단의 뜻은
 호출자를 중단하고 코루틴내에서만 호출할 수 있다는 뜻이다.
 
 
 ### Coroutine Context
-
+---
 
 ```java
 @SinceKotlin("1.3")
@@ -86,7 +86,7 @@ public interface CoroutineContext {
 그래서 우리는 코루틴 블록안에서 CoroutineContext에 접근할 수 있는것이다.
 
 ### CoroutineContext 는 어떻게 조정할 수 있는가?
-
+---
 CoroutineContext 는 불변이다. 하지만 element를 추가하거나 지우거나 이미 존재하는 context에 합치거나 하는식으로 새 Context 를 얻을 수 있다. 또한 만약 어떠한 요소도 없는 context 면 EmptyCoroutineContext 로 
 새로 만든다.
 plus operator 가 구현되있어서 기존 Context 에 새로 들어오는 context도 merge 할 수 있다. 
@@ -113,7 +113,7 @@ public operator fun <E : Element> get(key: Key<E>): E?
 이 부분을 통해 coroutineContext[Job]로 Element 도 읽을 수 있다.
 
 ### Coroutine Context Elements
-
+---
 코틀린은 CoroutineContext.Element 가 코루틴의 다양한 측면을 유지하고 관리하기 위한 여러 구현이 있습니다.
 
 - 디버깅 : CoroutineName , CoroutineId
@@ -123,7 +123,7 @@ public operator fun <E : Element> get(key: Key<E>): E?
 중간에 가로챈다.  
 
 ### Dispatchers
-
+---
 CoroutineDispatcher 는 ContinuationInterceptor Element 의 서브 타입이다. 
 
 ```java
@@ -178,5 +178,5 @@ IO : I'm working in thread DefaultDispatcher-worker-1
 Main : I'm working in thread main
 
 ### 참조
-
+---
 [https://kotlinlang.org/docs/coroutines-basics.html](https://kotlinlang.org/docs/coroutines-basics.html)

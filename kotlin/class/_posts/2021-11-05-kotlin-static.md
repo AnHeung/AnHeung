@@ -5,7 +5,7 @@ title: "Kotlin에는 Static이 존재하지 않는다."
 
 
 ### Static은 어디로 갔을까? 그리고 왜 사라졌을까?
-
+---
 최근 현대 언어들은 static 이 `Primitive Type` 의 명시적 지원중단 같은 이유로
 static을 삭제 했다. 
 
@@ -33,7 +33,7 @@ static 멤버들은 instance 멤버들과 분리되어 있는것이다. 그리�
 - Companion Objects
 
 ### Top-Level Function
-
+---
 자바의 경우 클래스 내부에 정의했겟지만 코틀린은 Top-Level Function 을 제공한다. 
 어디든 .kt 파일에 정의하면 소스가 내부에서 자동 생성된다.
 
@@ -60,7 +60,13 @@ public final class TopLevelFunctionKt {
 
 *Kotlin*
 ```java
-//Java
+package topLevel
+
+fun lowerCaseCount(value: String): Int = value.count { it.isLowerCase() }
+```
+
+*Java*
+```java
 public class StringUtils {
   private StringUtils() { /* Forbid instantiation of utility class */ }   
 
@@ -70,20 +76,12 @@ public class StringUtils {
   }
 ```
 
-*Java*
-```java
-package topLevel
-
-fun lowerCaseCount(value: String): Int = value.count { it.isLowerCase() }
-
-```
-
 Top-Level Function 과 프로퍼티는 패키지와 연관되어있다. 즉 2개의 Top-Level Function 와 프로퍼티를 
 같은 이름으로 같은 패키지의 다른파일에서 생성할수는 없다. 
 
 
 ### Constants (상수)
-
+---
 프로퍼티 또한 Top-Level 에 선언이 가능하다. 하지만 자바랑 다르게 상수나 변하지 않는 값(val) 만 
 사용하는걸 권장한다.
 
@@ -140,7 +138,7 @@ annotation `@file:JvmName:` 을 사용하면 된다.
 > ex) @file:JvmName("TopLevelFunction")
 
 ### Object singleton 
-
+---
 코틀린은 Object 선언을 통해 싱글톤 패턴을 지원한다. 
 
 *Kotlin*
@@ -298,7 +296,7 @@ public final class TopLevelFunction {
 실제 Instance.count 로 호출되고 있다. 
 
 ### Companion Objects 
-
+---
 `Object` 선언 자체로도 괜찮지만 만약 자바 클래스의 static 함수가 
 내부의 private 멤버들에 접근을 하려면 어떻게 해야할까? 
 
@@ -387,13 +385,13 @@ Rocket rocket = Rocket.build();
 
 
 ### 결론
-
+---
 static 을 제거함으로 Kotlin은 개념이 섞이는걸 피하고 더 강력하고(Object , Companion 객체) 
  더 적게 표기하지만 같은 기능 (Top-Level Functions And Properties 등)을 사용할 수 있다.
 하지만 코틀린을 처음 사용하는 경우 static을 사용하는 유즈케이스 등을 통해 익숙해고 배울 필요가 있다.
 
 ### 참조
-
+---
 [https://jelmini.dev/post/from-java-to-kotlin-life-without-static/](https://jelmini.dev/post/from-java-to-kotlin-life-without-static/)
 
 [https://kotlinlang.org/docs/functions.html#local-functions](https://kotlinlang.org/docs/functions.html#local-functions)

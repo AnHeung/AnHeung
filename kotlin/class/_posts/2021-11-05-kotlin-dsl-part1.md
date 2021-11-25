@@ -20,7 +20,7 @@ title: "Kotlin에서 DSL 사용하기 파트1"
 DSL을 사용함에 있어 위의 것들은 불필요한 기호를 사용하지 않도록 깔끔한 문법을 제공해준다.
 
 ### DSL 써보기
-
+---
 ```java
 val person = person {
     name = "John"
@@ -48,7 +48,7 @@ data class Address(var street: String? = null,
 ```
 
 ### 메소드 괄호 외부에서 람다 사용
-
+---
 생성자를 통해 Person 객체를 만들고  Person의 프로퍼티는 코드 내부에서 정의하고 있다.
 위에서 설명한 `메소드 괄호 외부에서 람다`를 사용 하였다.
 
@@ -87,7 +87,7 @@ person{}
 위에 정의한 person 함수를 리시버로써 람다로 변경해보자
 
 ### Lambda with receiver 사용
-
+---
 ```java
 fun person(block: Person.() -> Unit): Person {
     val p = Person()
@@ -130,7 +130,7 @@ Address 프로퍼티만 넣으면 되는데 이걸 하기 위해서 `확장 함�
 `확장 함수`는 자체 소스코드의 접근없이도 함수의 기능을 추가해준다. 
 
 ### 확장 함수 사용
-
+---
 ```java
 fun person(block: Person.() -> Unit): Person = Person().apply(block)
 
@@ -155,7 +155,7 @@ val person = person {
 ```
 
 ### 참조
-
+---
 [https://proandroiddev.com/writing-dsls-in-kotlin-part-1-7f5d2193f277](https://proandroiddev.com/writing-dsls-in-kotlin-part-1-7f5d2193f277)
 
 [https://developer.android.com/guide/navigation/navigation-kotlin-dsl?hl=ko](https://developer.android.com/guide/navigation/navigation-kotlin-dsl?hl=ko)

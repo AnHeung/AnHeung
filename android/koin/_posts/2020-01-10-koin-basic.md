@@ -14,12 +14,10 @@ title : Koin 정리
 
 {% include image.html id="1-bjAvGkbDpUoWmr-xaJzAXukX6Q62MLb"%}
 
-### DI 는 왜 중요한가
---- 
-
 SOLID 5원칙 중 클래스는 구체화가 아니라 추상화에 의존해야한다 명시한다.
 이러한 이론을 따름으로써 코드는 테스트하기 쉬워지고 다른 클래스와의 상속도 쉬워진다.
 그리고 더불어 결합성도 느슨해지게된다.
+
 
 ### 그래서 Koin이 뭐징?
 ---
@@ -232,8 +230,8 @@ class App : Application() {
 
 #### 6. Dependencies 주입
 
-UserViewModel 컴포넌트는 UserRepository 파라미터와 같이 만들어진다. 해당 인스턴스를 MainActivity 에서
-by viewModel() Delegate Injector 를 통해 주입이 된다.
+UserViewModel 컴포넌트는 UserRepository 파라미터와 같이 만들어진다. 
+해당 인스턴스를 MainActivity 에서 `by viewModel()` 를 선언하면 Delegate Injector 를 통해 주입이 된다.
 
 ```java
 class MainActivity : AppCompatActivity() {
@@ -262,5 +260,12 @@ class MainActivity : AppCompatActivity() {
 ```
 
 ### 결론
-
+---
 Koin 은 순수 코틀린으로 만든 Dagger 와 다르게 컴파일이 아닌 런타임에서 리플렉션을 사용한 DI 라이브러리로 DSL 를 사용해 읽고 이해하기 쉽게 구성할수 있다. 
+
+### 참조
+---
+[https://insert-koin.io/docs/reference/introduction](https://insert-koin.io/docs/reference/introduction)
+
+[https://medium.com/swlh/dependency-injection-with-koin-6b6364dc8dba](https://medium.com/swlh/dependency-injection-with-koin-6b6364dc8dba)
+

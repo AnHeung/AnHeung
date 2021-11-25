@@ -175,7 +175,7 @@ public final boolean isInitialize() {
 
 
 ### 참조
-
+---
 [https://kotlinlang.org/docs/properties.html](https://kotlinlang.org/docs/properties.html)
 
 

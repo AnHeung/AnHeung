@@ -48,5 +48,5 @@ launch { /* this: CoroutineScope */ } 이런식으로 실제 내부는 해당 �
 
 
 ### 참조
-
+---
 [https://kotlinlang.org/docs/coroutines-basics.html](https://kotlinlang.org/docs/coroutines-basics.html)

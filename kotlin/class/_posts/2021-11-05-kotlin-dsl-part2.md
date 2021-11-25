@@ -88,7 +88,7 @@ val person = person {
 ```
 
 ### Collections
-
+---
 이제 여기다 Collections 를 추가해본다 가정하자. 주소가 하나가 아니라 여러주소를 받아야해서  
 List<Address> 라고 가정했을 경우
 
@@ -174,7 +174,7 @@ val person = person {
 ```
 
 ### Narrowing scope
-
+---
 여기까지 했으면 읽기도 좋고 유지보수도 용이하고 안전하게 DSL을 구현했다 할수 있다.
 하지만 아직 한가지 이슈가 남았는데 람다안에 다른 람다 스코프를 계속 겹치게 만들으므로
 내부에 있는 람다 스코프에서 바깥쪽 람다의 스코프에 접근하는게 가능해진다.
@@ -210,7 +210,7 @@ class AddressBuilder {
 
 
 ### 실사용 사례 GsonBuilder 간략하게 만들기
-
+---
 serializing 과 deserializing 를 위한 gson 인스턴스를 만들기를 원할때 gson 자체에서 
 내부적으로 설정할수 있도록 GsonBuilder 를 제공한다. 그러나 직렬화 혹은 역직렬화 부분을
 건너뛰고 싶은 경우 상당히 지저분해 진다.
@@ -305,7 +305,7 @@ class ExclusionStrategyBuilder {
 
 
 ### 참조
-
+---
 [https://proandroiddev.com/writing-dsls-in-kotlin-part-2-cd9dcd0c4715](https://proandroiddev.com/writing-dsls-in-kotlin-part-2-cd9dcd0c4715)
 
 [https://developer.android.com/guide/navigation/navigation-kotlin-dsl?hl=ko](https://developer.android.com/guide/navigation/navigation-kotlin-dsl?hl=ko)
