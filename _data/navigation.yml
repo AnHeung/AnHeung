@@ -27,6 +27,10 @@ main-sidebar:
       url: "/code_test/shortest_path/"
     - title: "Graph"
       url: "/code_test/graph/"
+  - title: "CI/CD"
+    url: "/ci_cd/"      
+    children:
+    - title: "GIT"
   - title: "Android"
     url: "/android/"
     children:
