@@ -826,7 +826,7 @@ exception 발생 : java.lang.IllegalStateException: Crashed on 2
 
 
 ### Transparent catch (catch 예외 투명성)
-
+---
 예외 투명성을 지키는 catch 중간 연산자는 오직 업 스트림에서 발생하는 예외에만 대응하고
 다운스트림에서 발생한 예외에 대해선 처리하지 않는다.
 
@@ -855,3 +855,175 @@ Exception : java.lang.IllegalStateException: error exception 2
 다운 스트림에서 Exception 이 발생했고 위의 catch 연산자의 Caught Exception 의 문구는 출력되지 
 않았다. 
 
+### Flow completion (플로우 종료)
+---
+플로우의 수집이 종료(정상 종료 or 예외 발생) 되면 이후에는 두가지 동작을 수행해야한다. 
+`Imperative / Declarative`
+
+#### Imperative finally block (피할수 없는 파이널 블록)
+
+수집 시에 try/catch 에 추가적으로 수집 종료시 실행할 코드를 finally 를 통해 정의할 수있다.
+
+```java
+fun foo(): Flow<Int> = (1..3).asFlow()
+
+fun main() = runBlocking<Unit> {
+    try {
+        foo().collect { value -> println(value) }
+    } finally {
+        println("Done")
+    }
+}   
+```
+>1   
+2   
+3   
+Done
+
+#### Declarative handling (선언적 접근)
+
+선언적 접근으로는 플로우에 onCompletion 중간 연산자를 추가해서 플로우가 완전 수집 됬을때 실행 될 로직을  
+정의할 수 있다.
+
+이젠 예제에서 `onCompletion` 연산자를 이용해 다음과 같이 다시 작성할 수 있고 이는 동일한 출력 결과를 보인다. 
+
+```java
+foo()
+    .onCompletion { println("Done") }
+    .collect { value -> println(value) }
+```
+
+RxJava 에서도 비슷한 메소드가 있는데 선언적으로 연산자를 붙여서 최종적으로 처리됬을때 null 유무로 완료를 체크해서 구별할 수 있다.
+
+```java
+override fun logout() {
+        Completable.fromAction { mOAuthLoginModule?.logoutAndDeleteToken(activity)}
+            .doOnComplete { Logger.d("네이버 로그아웃 성공") }
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+}
+```
+onCompletion 을 사용 함으로써 얻는 최대 이점은 람다에 nullable 로 정의되는 Throwable 파라미터를 통해
+성공적으로 수집됫는지 예외를 발생했는지 구별할수 있다는점이다. 
+
+```java
+
+fun flowException()= flow{
+    for(i in 1..3){
+      if(i > 1) throw RuntimeException("flowException 발생 ")
+      emit(i)
+    }
+}
+
+fun main = runBlocking<Unit> {
+  flowException()
+     .onCompletion { cause -> if (cause != null) println("Flow completed exceptionally : $cause") }
+     .catch {  cause -> println("Caught exception : $cause")  }
+     .collect { printWithThread("collect $it") }
+
+  printWithThread("completed")
+}
+```
+
+> I'm working in thread main  : collect 1  
+Flow completed exceptionally : java.lang.RuntimeException: flowException 발생   
+Caught exception : java.lang.RuntimeException: flowException 발생   
+I'm working in thread main  : completed  
+
+flowException 함수가 처음 Exception 을 전파하고 그걸 onComplete 에서 throwable 객체가 값을 가지고 
+메시지를 뿌리고 마지막으로 catch 블록에서도 함수가 전달한 메시지를 받아 최종적으로 flow 가 중단되게 된다.
+
+onCompletion 연산자는 catch 와 달리 예외를 처리하진 않는다. 위의 예제에서 보이듯 결국 다운 스트림으로
+전달만 될뿐이다. (onCompletion -> catch)
+
+#### Upstream exceptions only (업 스트림 예외에 국한됨)
+
+catch 연산자와 동일하게 onCompletion 연산자도 업 스트림에서 전달되는 예외만 식별하고 처리할 수 있으며
+다운 스트림의 예외는 알지 못한다.
+
+```java
+fun foo(): Flow<Int> = (1..3).asFlow()
+
+fun main() = runBlocking<Unit> {
+   try {
+      foo()
+         .onCompletion { cause -> println("Flow completed with $cause") }
+         .collect {
+             check(it <= 1) { "Collected $it" }
+             printWithThread("collect $it")
+         }
+   } catch (e: Exception) {
+    printWithThread("try catch 로 빠져나옴 $e")
+  }
+  printWithThread("completed")
+}
+```
+
+> collect 1  
+Flow completed with java.lang.IllegalStateException: Collected 2  
+try catch 로 빠져나옴 java.lang.IllegalStateException: Collected 2
+completed
+
+이 결과를 통해 completion 의 cause 가 null 이지만 수집은 예외로 try/catch 쪽으로 빠졌음을 알수있다.
+즉 onCompletion 이라 해도 다운 스트림쪽은 어찌 막을 방법이 없다.
+
+### Launching flow (플로우 실행)
+---
+어떤 소스로 부터 발생하는 비동기 이벤트는 플로우를 통해 쉽게 표현될 수 있다. 이러한 경우를 위해
+우리는 일반적으로 들어오는 이벤트들에 대응하는 처리 코드를 addEventListener 를 통해 등록하고 이후  
+필요한 일을 진행해 가는 방식을 사용한다.
+
+플로우에서 같은 역할을 `onEach` 가 담당하기는 하지만 문제는 중간연산자이고 그 말은 즉슨 종단 연산자를
+선언하지 않으면 수집자체가 이루어 지지 않는다. onEach 만 가지고는 무언가를 진행할 수 없다.
+만약 onEach 연산자 이후에 collect 연산자를 사용하면 그 이후 코드는 플로우가 다 끝날때까지 대기할 것이다.
+
+
+```java
+fun events(): Flow<Int> = (1..3).asFlow().onEach { delay(100) }
+
+fun main() = runBlocking<Unit> {
+    events()
+        .onEach {event-> println("Event:$event") }
+        .collect() 
+    println("Done")
+}   
+```
+
+>Event: 1  
+Event: 2  
+Event: 3  
+completed
+
+이럴경우 `launchIn` 종단 연산자가 굉장히 유용하게 쓰인다. 수집을 다른 코루틴에서 진행시키고 
+이를 통해 이후에 작성된 코드들이 곧바로 실행되도록 한다.
+
+```java
+fun main() = runBlocking<Unit> {
+    events()
+        .onEach {event-> printWithThread("Event:$event") }
+        .collect() 
+    printWithThread("Done")
+}   
+```
+
+> I'm working in thread main: completed  
+I'm working in thread main: Event:1  
+I'm working in thread main: Event:2  
+I'm working in thread main: Event:3  
+
+launchIn 종단 연산자의 파라미터로는 코루틴 스코프가 들어가며 어디에서 해당부분을 처리할지 정할수 있다.
+여기선 this 는 main thread 고 따로 처리하는 코루틴 스코프가 생긴것이므로 중단함수 동안 다른 코루틴이 선점해서 수행되었다 볼 수 있다. 만약 스코프를 바꾸고 싶으면 `Dispathers.Default` 등으로 바꿔도 무난하다.
+
+```java
+public fun <T> Flow<T>.launchIn(scope: CoroutineScope): Job = scope.launch {
+    collect() // tail-call
+}
+```
+
+launchIn 은 결국 Job 으로 반환 되고 이를 통해 전체 스코프를 취소하거나 특정 Job 에 대한 
+Join 문을 사용할 필요 없이 그에 속한 플로우 수집 코루틴을 취소할 수 있다.
+
+실제 애플리케이션에서 스코프는 제한된 생명 주기를 갖는 엔터티로 부터 전달 될 수 있다. 이 엔터티의
+생명주기가 종료되면 그에 속한 스코프는 취소되고 스코프에 속한 플로우의 수집 또한 취소된다. 
+즉 `onEach{...}.launchIn(scope)` 는 addEventListener 와 동일하지만  
+removeEventListener 를 할 필요가 없다. 구조화 된 동시성이 이부분을 다 해주기 때문이다.
