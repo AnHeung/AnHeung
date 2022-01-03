@@ -19,7 +19,7 @@ title : 안드로이드 테스트 코드 기본
 `test` - 로컬 테스트를 작성하기 위한 곳이다. 오직 개발장비(pc, 노트북 등)의 JVM 에서만 동작하고
 실제 에뮬레이터나 기기로 동작하지 않기 때문에 빠르다는 장점이 있다. 하지만 빠르다해도 충실도와 신뢰도는 다소 떨어질수 있다.
 
-`androidTest` - 실제 기기나 에뮬레이터를 통해 동작하는 테스트다. 실제 기기로 동작하기 때문에 느리다.  
+`androidTest` - 실제 기기나 에뮬레이터를 통해 동작하는 테스트다. 실제 기기로 동작하기 때문에 느리다.   
 실제 테스트에 필요한 Context 에 접근할 권한을 제공받으며 이 테스트에서 개발자는 테스트 대상 앱을 테스트 코드에서 제어할 수 있다. 
 
 신뢰도는 로컬 테스트에 비하면 아주 높고 만약 CI 서버에서 테스트 자동화가 이루어진다면 해당 테스트를 위한 기기나 에뮬레이터가 연결되있어야 한다. 
@@ -73,13 +73,12 @@ AndroidX test 라이브러리엔 `ActivityTestRule`, `ServiceTestRule` 등과 �
  // ActivityTestRule
  @get:Rule
  val activityRule = ActivityTestRule(MyClass::class.java)
+
+//InstantTaskExecutorRule
+ @get:Rule
+    var instantExecutorRule = InstantTaskExecutorRule()
 ```
 
-```java
-// MainCoroutineRule
- @get:Rule
- val mainCoroutineRule = MainCoroutineRule()
-```
 
 위처럼 다양한 Rule 이 있으니 필요에 따라 적절한 Rule 인스턴스를 얻어 작업하면 된다.
 
@@ -104,3 +103,101 @@ viewModel 을 구성하다 보면 위처럼 Activity 나 fragment 에 어떤 이
 알림을 날릴 것이다. 근데 위의 코드를 보면 postValue 를 사용했는데 해당 메소드는 백그라운드 Thread 에서 일을 수행한다. 그 말은 해당 부분을 테스트 코드로 작성해 msg 객체가 sendMsg 함수후 값이 변했나 안변했나를 
 체크하면 값이 비동기로 처리되기 때문에 테스트가 이미 끝나서 오류가 발생할 것이다. 이럴경우 사용하는 Rule 이
 InstantTaskExecutorRule 이 있다. 해당 룰은 모든 아키텍처 구성요소 관련 백그라운드 작업을 동일한 Thread 에서 돌게한다. 즉 동기적으로 처리가 된다. 여기서 재밋는건 로컬 테스트에서 postValue 가 아닌 setValue 를 사용한다 한들 InstantTaskExecutorRule 을 적용하지 않으면 테스트는 실패한다. 
+
+### Coroutine Test
+
+코루틴 테스트를 한다고 가정해보자
+
+```java
+class TestViewModel : ViewModel (){
+    var name : String = "hello"
+    private set
+
+    fun changeName(newName:String) = viewModelScope.launch{
+        name = newName
+    }
+}
+```
+
+위의 코드는 activity 나 fragment 등에서 호출할 경우 Dispatcher.main 의 스코프를 그대로 받아
+코루틴이 실행된다. 즉 해당 코드를 테스트 하기 위해 메인 스레드에서 호출하는 테스트를 하면 아래와 같다.
+
+```java
+class MyViewModelTest: ViewModel() {
+   @Test
+   fun changeNameTest() = runBlocking {
+       val myViewModel = MyViewModel()
+       val newName = "world"
+       myViewModel.changeName(newName)
+       Assert.assertEquals(myViewModel.name, newName)
+   }
+}
+```
+
+로컬 테스트에서는 에서는 실제 환경에서의  Android main looper 를 사용해선 안된다. 대신 테스트 환경에 맞는 TestCoroutineDispatcher 를 호출해서 사용해야 한다. `kotlinx-coroutines-test` 는 테스트 전용으로 만들어진 라이브러리다. gradle 에 추가해서 사용하도록 하자.
+
+```gradle
+testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
+```
+
+```java
+@ExperimentalCoroutinesApi
+class TestViewModelTest {
+    private val testDispatcher = TestCoroutineDispatcher()
+
+    @Before
+    fun setup() {
+        Dispatchers.setMain(testDispatcher)
+    }
+
+    @After
+    fun tearDown() {
+        //  원래의 상태로 되돌려 놓는다.
+        Dispatchers.resetMain()
+        // 테스트가 끝났으니 혹시 모를 실행중인 작업을 clean up 시켜준다.
+        testDispatcher.cleanupTestCoroutines()
+    }
+
+    @Test
+    fun testSomething() = runBlockingTest {
+        ...
+    }
+}
+```
+
+만약 모든 테스트마다 before after 를 만들기 귀찮다면 Rule을 직접만들어서 활용할 수 있다.
+
+```java
+@ExperimentalCoroutinesApi
+class MainCoroutineRule(
+    val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+) : TestWatcher() {
+
+    override fun starting(description: Description?) {
+        super.starting(description)
+        Dispatchers.setMain(testDispatcher)
+    }
+
+    override fun finished(description: Description?) {
+        super.finished(description)
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
+    }
+}
+
+@ExperimentalCoroutinesApi
+fun MainCoroutineRule.runBlockingTest(block: suspend () -> Unit) =
+    runTest { 
+        block()
+    }
+```
+
+위처럼 작성하고 필요한 부분마다 호출해서 사용하면 된다.
+
+```java
+@get:Rule
+val mainCoroutineRule = MainCoroutineRule()
+```
+
+위의 코드에서 runTest 함수를 호출했는데 실제 runBlocking 과  큰 차이점은  delay 같은 함수가 있을경우 즉시 실행이 된다는점이다. 덕분에 테스트 시간을 절약할 수 있다는 장점이 있다.
+
