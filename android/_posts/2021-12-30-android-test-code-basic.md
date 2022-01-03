@@ -3,9 +3,6 @@ layout: single
 title : 안드로이드 테스트 코드 기본
 ---
 
-### 개요
----
-
 안드로이드 스튜디오는 테스트 작업을 간단히 수행하도록 설계가 되있다. 기본적으로 JVM 단에서 동작하는
 로컬테스트와 실제 에뮬레이터가 디바이스를 동작시켜 테스트 하는 계측 테스트로 나뉘는데 해당 디렉토리에
 작성함으로 각자에 맞는 테스트를 진행할 수 있게된다.
@@ -26,7 +23,7 @@ title : 안드로이드 테스트 코드 기본
 
 
 ### AndroidX Test Library
-
+---
 만약 그냥 ViewModel 을 만들어 쓴다 가정하면 생성자에 어떠한 파라미터도 받지 않는다. 그런데 Application 의
 `context` 를 생성자에서 의존하게 됫다면 이럴경우 어떻게 주입하는게 맞을까? 
 
@@ -84,7 +81,7 @@ AndroidX test 라이브러리엔 `ActivityTestRule`, `ServiceTestRule` 등과 �
 
 
 ### LiveData Test
-
+---
 LiveData 를 사용해 ViewModel 테스트를 한다고 가정해보자. 
 
 ```java
@@ -105,7 +102,7 @@ viewModel 을 구성하다 보면 위처럼 Activity 나 fragment 에 어떤 이
 InstantTaskExecutorRule 이 있다. 해당 룰은 모든 아키텍처 구성요소 관련 백그라운드 작업을 동일한 Thread 에서 돌게한다. 즉 동기적으로 처리가 된다. 여기서 재밋는건 로컬 테스트에서 postValue 가 아닌 setValue 를 사용한다 한들 InstantTaskExecutorRule 을 적용하지 않으면 테스트는 실패한다. 
 
 ### Coroutine Test
-
+---
 코루틴 테스트를 한다고 가정해보자
 
 ```java
