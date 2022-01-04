@@ -25,7 +25,7 @@ title : 안드로이드 테스트 코드 기본
 ### AndroidX Test Library
 ---
 만약 그냥 ViewModel 을 만들어 쓴다 가정하면 생성자에 어떠한 파라미터도 받지 않는다. 그런데 Application 의
-`context` 를 생성자에서 의존하게 됫다면 이럴경우 어떻게 주입하는게 맞을까? 
+`context` 를 생성자에서 필요로 하게 된다면 이럴경우 어떻게 주입하는게 맞을까? 
 
 `AndroidX Test Library` 를 사용하면 테스트를 위한 안드로이드 컴포넌트 (Application, Activity) 들과 메서드를 제공해 준다. 로컬 테스트중 해당 컴포넌트를 호출할 부분이 필요하다면 사용해야한다.
 
@@ -52,6 +52,8 @@ Robolectric 이 할 일 이다. 예전에는 local test 에서 context 를 얻�
 하지만 이제 AndroidX Test 라이브러리 덕분에 직접사용하진 않게 되었다. 가장 좋은점은 예전에 따로 Robolectric 을 공부하고 사용법을 공부해야했던 부분들을 AndroidX Test 라이브러리 덕분에 많이 쉽게 적용할 수 있다는 것이다. Instrumented test 에서도 AndroidX Test Library 의 같은 메소드를 사용해서 context 를 얻는게 가능한데 그건 시뮬레이트된 환경의 context 가 아닌 실제 기기의 context 를 얻게 된다.
 
 #### AndroidJUnit4::class
+
+{% include image.html id="133IJVLuXDzUfg38YHxElFhPPIzCFSoqV"%}
 
 Android4JUnit4 는 테스트 러너다. 테스트를 실행하는 주체로 junit 은 테스트 러너 없이는 테스트가 실행이 되지 않는다. runner 를 지정해주지 않으면 기본 runner 로만 실행되는데 여기서 `@RunWith` 를 함으로 러너를 교체할 수 있다. Android4JUnit 은 AndroidX Test 라이브러리가 로컬 테스트와 계측 테스트에서 서로 다르게 동작 할 수 있도록 도와준다. 위에 Robolectric 에서 언급한거 처럼 로컬에선 시뮬레이트 된 환경의 context 
 계측 테스트에선 실제 기기의 context 를 제공해주는데 이것이 Android4JUnit 러너가 수행하는 역할이다. 
