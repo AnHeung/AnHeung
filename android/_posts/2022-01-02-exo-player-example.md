@@ -256,7 +256,8 @@ private fun initializePlayer() {
 
 ##### DASH
 [DASH](https://ko.wikipedia.org/wiki/HTTP_%EB%8F%99%EC%A0%81_%EC%A0%81%EC%9D%91_%EC%8A%A4%ED%8A%B8%EB%A6%AC%EB%B0%8D) 는 광범위하게 사용되는 적응형 스트리밍 기술이다. DASH 컨텐츠를 스트리밍 하기 위해선 위의 방법처럼 `fromUri ` 을 통해 MediaItem 을 만들면 안되고 적절한 MIME TYPE 으로 맞춰서 만들어야 한다.  
-`fromUri` 는 media 포맷 확장자를 기본적으로 사용하지만 DASH 타입은 `APPLICATION_MPD` MIME TYPE 을 사용한다.
+`fromUri` 는 기본 media 포맷을 정하기 위해서 파일확장자를 사용하지만 DASH URI 는 파일확장자를 가지지  
+않고 `APPLICATION_MPD` MIME TYPE 을 사용한다.
 
 ##### MediaItem.Builder 로 만들수 있는 다양한 속성들
 
