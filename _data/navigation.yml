@@ -34,6 +34,8 @@ main-sidebar:
   - title: "Android"
     url: "/android/"
     children:
+    - title: "Test"
+      url: "/android/test/"
     - title: "RX"
       url: "/android/rx/"
     - title: "koin"
