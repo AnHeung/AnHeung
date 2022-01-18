@@ -60,3 +60,19 @@ Compose 나 Espresso 는 테스트를 고려해 설계되었고 UI 가 다음 �
 추천하는 접근 방식은 dependency injection 을 사용하는 것이다. 직접 DI 를 구축할 수 있지만 [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) 같은 DI 프레임워크를 사용하길 권한다. 
 
 ### 왜 테스트 자동화를 해야하는가?
+---
+안드로이드 앱은 다양한 API 레벨들과 폼팩터를 통해서 다른 수천가지의 기기들을 대상으로 삼을 수 있다. 그리고
+OS 가 유저에게 제공하는 높은 수준의 사용자 정의는 앱이 부적절하게 렌더링 되거나 몇몇 기기에서 충돌이 날 수 있다.
+
+UI 테스트는 호환성 테스트를 할수 있게 해주고 다른 컨텍스트에서 앱의 동작을 검증한다.  
+다음과 같은 방식으로 다양한 기기에서 UI 테스트를 동작시킬수 있다.  
+
+- API 레벨 : 21,25,30
+- Locale : English, Korea , Chinese
+- Orientation : Protrait , landscape
+
+더욱이 앱은 태블릿이나 폴더블 등 다른 기기에 대해서도 확인해봐야한다.
+
+### 출저
+---
+[Automate UI tests](https://developer.android.com/training/testing/instrumented-tests/ui-tests)
