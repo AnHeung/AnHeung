@@ -36,7 +36,7 @@ dependencies {
 ---
 JUnit4 클래스를 통해 로컬 단위테스트를 작성할 수 있다.   
 `module-name/src/test/` 폴더안에 하나 또는 그 이상의 테스트 메소드를 포함한 클래스를 만들고  
- `@Test` 애노테이션을 테스트 메소드에 붙인다. 해당 애노테이션이 붙은 코드가 동작하고 검증한다.  
+ `@Test` 주석을 테스트 메소드에 붙인다. 해당 주석이 붙은 코드가 동작하고 검증한다.  
 
 아래 따라오는 예시는 어떻게 로컬 단위 테스트가 동작하는지 설명한다. 아래 `emailValidator_correctEmailSimple_returnsTrue()` 는 `isValidEmail()` 를 검증한다. 만약 `isValidEmail()` 가 항상 true 를 반환한다면 테스트 함수도 true 를  반환할 것이다.
 
@@ -73,11 +73,11 @@ class EmailValidatorTest {
 
 1. `build.gradle` 파일에 Mockito 라이브러리 의존성을 넣어라. 자세한건 [테스트 환경 구축하기](https://developer.android.com/training/testing/instrumented-tests/androidx-test-libraries/test-setup#add-gradle) 참조
 
-2. 단위테스트 클래스를 시작하기 앞서 @RunWith(MockitoJUnitRunner.class) 애노테이션을 넣어라.   
-이 애노테이션은 Mockito test runner 에게 프레임워크가 올바르게 사용되고 있는지 확인하고 mock 객체의 
+2. 단위테스트 클래스를 시작하기 앞서 @RunWith(MockitoJUnitRunner.class) 주석을 넣어라.   
+이 주석은 Mockito test runner 에게 프레임워크가 올바르게 사용되고 있는지 확인하고 mock 객체의 
 초기화를 단순화 하도록 지시한다. 
 
-3. 안드로이드 의존성에 mock 객체를 만들기 위해 필드 선언전에 `@Mock` 애노테이션 추가 
+3. 안드로이드 의존성에 mock 객체를 만들기 위해 필드 선언전에 `@Mock` 주석 추가 
 
 4. 의존성의 동작을 stub 으로 만들기 위해 `when()` 과 `thenReturn()` 함수를 사용해 조건이 충족하면 
 조건이나 반환값을 지정할 수 있다. 

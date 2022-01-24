@@ -14,11 +14,10 @@ layout: single
 
 ### 필수적인 단위테스트
 ---
-모범적인 사례를 따른다면 다음과 같은 경우 단위테스트를 해야한다.
+다음과 같은 경우 단위테스트를 해야한다.
 
-- ViewModel 또는 presenter 에 대한 단위테스트
-- data 영역 (특히 repository) 에 대한 단위테스트. 대부분의 data 영역은 플랫폼 독립적이여야한다.
-그럼으로 test doubles 을 사용해 database 모듈이나 remote data source 등을 교체 할 수 있다. 
+- ViewModel 또는 Presenter 에 대한 단위테스트
+- Data 영역 (특히 Repository) 에 대한 단위테스트. 대부분의 Data 영역은 플랫폼 독립적이여야한다. Test Doubles 을 사용해 Database 모듈이나 Remote Data Source 등을 교체 할 수 있다. 
 - 다른 플랫폼 독립접인 Domain 영역에 대한 단위 테스트. 
 - string 을 다루거나 계산식 등이 들어가는 유틸 클래스에 대한 단위 테스트
 
@@ -49,7 +48,7 @@ layout: single
 
 ### 다른 테스트
 ---
-스크린샷 테스트라던가 퍼포먼스 테스트 monkey test 등 여러 특별한 테스트들이 여기 해당된다. 
+스크린샷 테스트라던가 퍼포먼스 테스트 Monkey Test 등 여러 특별한 테스트들이 여기 해당된다. 
 접근성이나 호환성 [회귀 테스트](https://ko.wikipedia.org/wiki/%ED%9A%8C%EA%B7%80_%ED%85%8C%EC%8A%A4%ED%8A%B8)등 목적에 따라 분류 할 수 있다.
 
 

@@ -46,7 +46,8 @@ android {
 ```
 
 계측된 JUnit4 테스트 클래스를 만들기 위해 기본 test runner 로 `AndroidJUnit4` 지정한다.  
-> 만약 테스트가 JUnit4 와 JUnit3 라이브러리를 합쳐서 의존한다면 @RunWith(AndroidJUnit4::class)   애노테이션을 테스트 시작시 정의하면 된다.
+> 만약 테스트가 JUnit4 와 JUnit3 라이브러리를 합쳐서 의존한다면 @RunWith(AndroidJUnit4::class)  
+주석을 테스트 시작시 정의하면 된다.
 
 아래의 예제는 `LogHistory` 클래스를 위한 `Parcelable` 인터페이스가 바르게 구현되는지를 확인하는 계측 테스트 작성 방법이다.
 
