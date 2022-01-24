@@ -2,8 +2,6 @@
 layout: single
 title : ExoPlayer 샘플 만들기 및 정리
 ---
-### 개요
----
 ExoPlayer 는 안드로이드 어플리케이션단의 미디어 플레이어다.
 안드로이드 [MediaPlayer](https://developer.android.com/guide/topics/media/mediaplayer?hl=ko) 과 똑같이 구글에서 만들었지만 오픈 소스 미디어 플레이 라이브러리로 MediaPlayer 보다 장점과 기능이 많다 (내장되있지 X).   
 음악,비디오 재생을 로컬이나 스트리밍단에서 동작하도록 지원하고 MediaPlayer 에서는 지원하지 않는 DASH 나 SmoothStreaming 재생 등도 지원하고 커스터 마이징하기도 쉽고 확장성도 좋다.

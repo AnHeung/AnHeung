@@ -2,11 +2,7 @@
 layout : single
 title : Flutter_Bloc 를 사용한 Bloc 이해와 사용
 ---
-
-개요
----
-
-Bloc 에 대한 참조는 [Bloc 패턴의 이해](/flutter/bloc/bloc-definition/)
+Bloc 에 대한 참조는 [Bloc 패턴의 이해](/flutter/bloc/bloc-definition/) 에서 확인하세요.
 
 Flutter에서 Bloc 패턴을 편한하게 쓰기 위한 [flutter_bloc](https://pub.dev/packages/flutter_bloc)  라이브러리가 있다. 보통 Bloc 패턴을 구현하기 위해 Cubit 이라던가 StreamController 등을 통해 구현하지만 flutter_bloc는 그런 부분을 쉽게 구현할수 있게 도와준다.
 

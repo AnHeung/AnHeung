@@ -2,14 +2,11 @@
 layout : single
 title : Hilt 테스트 가이드
 ---
-### 개요
----
-
 Hilt 같은 DI 프레임워크를 사용함으로 얻는 장점은 테스트 코드를 작성하기 쉽다는 점이다.
 
 ### 단위 테스트
 ---
-생성자 주입을 사용하는 클래스를 테스트할때는 클래스 생성을 위해 Hilt 를 단위테스트에서 사용할 필요는 없다. 대신 생성자에 주석을 달지 않는 경우 처럼 직접 fake 나 mock 같은 의존성을 전달하여 생성자를 호출할 수 있다.
+생성자 주입을 사용하는 클래스를 테스트할때는 클래스 생성을 위해 Hilt 를 단위테스트에서 사용할 필요는 없다. 대신 생성자에 주석을 달지 않는 경우 처럼 직접 Fake 나 Mock 같은 의존성을 전달하여 생성자를 호출할 수 있다.
 
 ```java
 @ActivityScoped
@@ -31,8 +28,7 @@ class AnalyticsAdapterTest {
 
 ### End-To-End 테스트
 ---
-통합 테스트를 위해 Hilt 는 프로덕션 코드에서 처럼 의존성을 주입해주어야 한다. Hilt 로 테스트 하기 위해서 유지관리는 필요없다. 왜냐하면 Hilt 가 자동으로 각각의 테스트를 위한 컴포넌트 세트를 만들어주기 때문이다.
-
+통합 테스트를 위해 Hilt 는 프로덕션 코드처럼 의존성을 주입해주어야 한다. Hilt 가 자동으로 각각의 테스트를 위한 컴포넌트 세트를 만들어주기 때문에 따로 유지관리는 필요없다.
 
 ##### 테스트 의존성 추가
 ---
@@ -74,7 +70,7 @@ class SettingsActivityTest {
 }
 ```
 
-> 만약 위의 Rule 말고도 다른 Rule 도 가지고 있다면 [Multiple TestRule objects in your instrumented test](https://developer.android.com/training/dependency-injection/hilt-testing#multiple-testrules)문서를 확인하세요.
+> 만약 위의 Rule 말고도 다른 Rule 도 가지고 있다면 [계측 테스트의 여러 Test Rule 객체](/android/hilt/hilt-test-guide/#계측-테스트의-여러-test-rule-객체) 문서를 확인하세요.
 
 
 ### 테스트 Application 
@@ -113,8 +109,7 @@ android {
 
 ##### Robolectric 테스트에서 테스트 Application 설정
 
-Robolectric 을 사용해 UI 영역을 테스트중이면 `robolectric.properties` 파일에 어느 어플리케이션을 쓸건지  
-명시해야 한다. 
+Robolectric 을 사용해 UI 영역을 테스트중이면 `robolectric.properties` 파일에 어느 Application 클래스를 쓸건지 명시해야 한다. 
 ```
 application = dagger.hilt.android.testing.HiltTestApplication
 ```
@@ -134,9 +129,7 @@ class SettingsActivityTest {
 
 ### 테스트 기능들
 ---
-일단 Hilt 테스트에서 세팅되면 몇몇 기능들을 사용해 테스트 프로세스를 사용자 정의 할 수 있다.  
-테스트에 Type 을 주입하려면 필드에 @Inject 를 사용해야 한다. 필드값을 채우도록 Hilt 에 지시하려면  
-hiltRule.inject() 함수를 호출하세요.
+일단 Hilt 테스트에서 세팅되면 몇몇 기능들을 사용해 테스트 프로세스를 사용자 정의 할 수 있다. 테스트에 Type 을 주입하려면 필드에 @Inject 를 사용해야 한다. 필드값을 채우도록 Hilt 에 지시하려면 hiltRule.inject() 함수를 호출하세요.
 
 ```java
 @HiltAndroidTest
