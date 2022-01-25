@@ -100,7 +100,7 @@ class ExampleActivity : AppCompatActivity() { ... }
 ---
 Hilt 는 의존성 그래프를 만들어서 필요한 곳에 적절히 의존성을 제공해주는 라이브러리다. 그래서 의존성이 필요한 곳이 있다면 Hilt 에게 주입받고 싶다라고 알려야 Hilt 가 인지해서 해당부분에 의존성을 주입해 줄 수 있다. 
 
-##### 1. Field Injection (필드 주입)
+#### 1. Field Injection (필드 주입)
 
 필드에 의존성을 주입받고 싶으면 @Inject 주석을 사용하면 Hilt 컴포넌트로 부터 의존성을 얻을 수 있다.
 
@@ -118,7 +118,7 @@ class ExampleActivity : AppCompatActivity() {
 알 필요가 있다. 바인딩은 의존성 Type 의 인스턴스로써 제공하는데 필요한 정보를 포함하고 있다.  
 
 
-##### 2. Constructor Injection (생성자 주입)
+#### 2. Constructor Injection (생성자 주입)
 
 Hilt 에 바인딩 정보를 제공하는 한가지 방법으로 생성자 주입이 있다. `@Inject` 주석을 생성자에 쓰고 
 거기에 제공할 인스턴스를 Hilt 에게 알려준다.
@@ -198,7 +198,7 @@ Hilt 모듈을 통해 제공하는 의존성은 Hilt 모듈이 설치된 안드�
 
 특히 interface 나 외부 라이브러리 처럼 Hilt 가 객체를 어떻게 생성해야할지 모를 경우 꼭 필요하다.
 
-##### 1. @Binds 로 interface 인스턴스 주입
+#### 1. @Binds 로 interface 인스턴스 주입
 
 AnalyticsService 예제를 생각해보면  AnalyticsService 는 인터페이스이기 때문에 생성자 주입이 안된다.  
 
@@ -232,7 +232,7 @@ abstract class AnalyticsModule {
 
 Hilt 모듈인 AnalyticsModule 은 `@InstallIn(ActivityComponent::class)` 주석을 붙인다. ExampleActivity 에 의존성 주입을 하기를 원하기 때문이다. 이 주석은 `AnalyticsModule` 안의 모든 의존성은 앱의 모든 액티비티에서 사용가능하다라는 뜻이다. 
 
-##### 2. @Provide 로 인스턴스 주입하기
+#### 2. @Provide 로 인스턴스 주입하기
 
 위에서 설명하듯 인터페이스만이 유일한 생성자 의존성 주입이 안되는건 아니다. 내가 가지고 있지 않는 클래스(retrofit,OkHttpClient , Room 같은 외부 라이브러리) 또는 builder 패턴을 사용해 만드는 인스턴스 또한 생성자 주입이 안된다.  
 
@@ -262,7 +262,7 @@ object AnalyticsModule {
 }
 ```
 
-##### 3. 같은 Type 에 대한 멀티 바인딩 제공하기
+#### 3. 같은 Type 에 대한 멀티 바인딩 제공하기
 
 같은 Type 의 의존성을 다른 구현체로 (예를 들어 같은 인터페이스에서 나온 각기 다른 구현체를 주입하는 경우나 반환 Type 이 String 인 함수가 2개인데 각각 분리해서 주입해야하는 경우 등) 주입하는 경우 한정자 (qualifier) 를  정의해서 Hilt 에게 멀티 바인딩 을 제공할 수 있다.  
 
@@ -345,7 +345,7 @@ class ExampleActivity: AppCompatActivity() {
 
 > 한정자를 사용하지 않을 경우 Hilt 가 잘못된 객체를 주입하게 되서 에러가 발생할 수 있다.
 
-##### 4. Hilt 에 있는 사전정의된 한정자
+#### 4. Hilt 에 있는 사전정의된 한정자
 
 Hilt 는 사전 정의된 한정자를 제공한다. 예를 들어 Application 이나 Activity 로 부터 Context 클래스가 필요 할 수 있다. 이럴 경우 Hilt 는 @ApplicationContext 와 @ActivityContext 한정자를 제공해준다.
 

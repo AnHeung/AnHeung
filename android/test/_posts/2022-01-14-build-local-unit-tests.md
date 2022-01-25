@@ -1,5 +1,5 @@
 ---
-title: 로컬 단위 테스트 빌드하기.
+title: 로컬 단위 테스트 빌드하기
 layout: single
 ---
 로컬 테스트는 안드로이드 에뮬레이터나 실제 기기말고 JVM 을 사용하여 개발머신에서 동작한다. 
@@ -62,7 +62,7 @@ class EmailValidatorTest {
 뿐만 아니라 안드로이드 클래스와 함께 모의 클래스를 사용하는것을 허용해준다.   
 (테스트 유형인 mock 은 그것의 상호작용에 대한 기대값을 가지고 너가 정의한대로 행동한다. [안드로이드에서 테스트 더블(test doubles) 사용하기.](/android/test/use-test-doubles-in-android/))
 
-##### 안드로이드 mock 의존성
+#### 안드로이드 mock 의존성
 
 클래스가 string 리소스를 사용하는것을 알아내는것은 일반적인 문제다. `getString()` 이란 Context 내부 함수를 통해 string 리소스를 얻을 수 있지만 로컬 테스트에서는 안드로이드 프레임워크에 속하는 
 함수는 (Context 같은) 쓸 수 없다. 이상적인 방법으로 getString 함수를 클래스 밖으로 빼내는 방법도 있지만

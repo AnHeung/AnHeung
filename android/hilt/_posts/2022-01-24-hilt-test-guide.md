@@ -30,7 +30,7 @@ class AnalyticsAdapterTest {
 ---
 통합 테스트를 위해 Hilt 는 프로덕션 코드처럼 의존성을 주입해주어야 한다. Hilt 가 자동으로 각각의 테스트를 위한 컴포넌트 세트를 만들어주기 때문에 따로 유지관리는 필요없다.
 
-##### 테스트 의존성 추가
+#### 테스트 의존성 추가
 ---
 Hilt 를 테스트에 쓰기 위해 `hilt-android-testing` 의존성을 프로젝트에 주입하자.
 
@@ -79,7 +79,7 @@ class SettingsActivityTest {
 
 계측테스트나 Rolectric 테스트를 위해서 테스트 Application 를 세팅해둬야한다. 아래의 지시사항은 Hilt 만을 특정한것은 아니지만 일반적으로 테스트를 위한 사용자 정의 Application 에 대한 가이드 라인이다.
 
-##### 계측테스트에서 테스트 Application 설정
+#### 계측테스트에서 테스트 Application 설정
 
 계측 테스트에서 Hilt Test Application 을 사용하고 싶으면 새로운 테스트 러너를 구성할 필요가 있다. 아래의 단계를 수행하시오.  
 
@@ -107,7 +107,7 @@ android {
 }
 ```
 
-##### Robolectric 테스트에서 테스트 Application 설정
+#### Robolectric 테스트에서 테스트 Application 설정
 
 Robolectric 을 사용해 UI 영역을 테스트중이면 `robolectric.properties` 파일에 어느 Application 클래스를 쓸건지 명시해야 한다. 
 ```
@@ -153,7 +153,7 @@ class SettingsActivityTest {
 }
 ```
 
-##### 바인딩 교체
+#### 바인딩 교체
 
 Fake 나 Mock 인스턴스의 의존성이 필요하다면 Hilt 에게 프로덕션에서 사용하는 바인딩 코드 말고 다른걸 써야한다고 알려야 한다. 바인딩 교체를 위해서 테스트에서 사용할 바인딩을 포함할 테스트 모듈로 교체가 필요하다. (app 모듈 -> 테스트 모듈) 예를 들어 테스트에서 AnalyticsService 를 프로덕션 코드에서 바인딩을 선언했다고 가정해보자. 
 
@@ -188,9 +188,9 @@ abstract class FakeAnalyticsModule {
 }
 ```
 
-##### 단일 테스트의 바인딩 교체
+#### 단일 테스트의 바인딩 교체
 
-모든 테스트 대신 단일 테스트로 바인딩을 교체하려면 `@UninstallModules` 주석을 사용해 Hilt 모듈을 제거해고 테스트안에 새 테스트 모듈을 만들어야한다.  
+모든 테스트의 바인딩 대신 단일 테스트의 바인딩을 교체하려면 `@UninstallModules` 주석을 사용해 Hilt 모듈을 제거하고 테스트안에 새 테스트 모듈을 만들어야한다.  
 
 ```java
 @UninstallModules(AnalyticsModule::class)
@@ -263,7 +263,7 @@ class SettingsActivityTest {
 ---
 Hilt 는 일반적이지 않은 경우에 대해서도 기능을 지원한다.  
 
-##### 테스트를 위한 사용자 정의 Application
+#### 테스트를 위한 사용자 정의 Application
 
 만약 HiltTestApplication 를 다른 Application 의 확장이 필요해서 사용하지 않는 다면 새 클래스나 인터페이스에 `@CustomTestApplication` 주석을 붙여 사용할 수 있다.   
 `@CustomTestApplication` 는 매개변수로 전달한 Application 을 확장하는 Hilt 로 테스트할 준비가 된 Application 클래스를 생성한다. 
@@ -276,7 +276,7 @@ interface HiltTestApplication
 
 > HiltTestApplication_Application 는 런타임 시 생성하는 코드이므로 IDE 는 테스트가 실행될때 까지 빨간색으로 표시할 수 있다.
 
-##### 계측 테스트의 여러 Test Rule 객체
+#### 계측 테스트의 여러 Test Rule 객체
 
 만약 다른 `TestRule` 객체를 가지고 있다면 함께 동작을 보장하게 하는 다양한 방법이 있다.
 아래와 처럼 rule 들을 체인으로 연결해서 함께 Wrap 할수 있다. 
