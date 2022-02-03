@@ -77,9 +77,9 @@ class SettingsActivityTest {
 ---
 계측 테스트를 수행한다면 Hilt 가 지원하는 Application 을 사용해서 해야한다. Hilt 라이브러리는 테스트를 위한 `HiltTestApplication` 클래스를 제공한다. 만약 다른 Application 클래스를 쓰고 싶다면 [Custom application for tests](https://developer.android.com/training/dependency-injection/hilt-testing#custom-application) 해당 문서를 참조하세요.
 
-계측테스트나 Rolectric 테스트를 위해서 테스트 Application 를 세팅해둬야한다. 아래의 지시사항은 Hilt 만을 특정한것은 아니지만 일반적으로 테스트를 위한 사용자 정의 Application 에 대한 가이드 라인이다.
+계측 테스트나 Rolectric 테스트를 위해서 테스트 Application 를 세팅해둬야한다. 아래의 지시사항은 Hilt 만을 특정한것은 아니지만 일반적으로 테스트를 위한 사용자 정의 Application 에 대한 가이드 라인이다.
 
-#### 계측테스트에서 테스트 Application 설정
+#### 계측 테스트에서 테스트 Application 설정
 
 계측 테스트에서 Hilt Test Application 을 사용하고 싶으면 새로운 테스트 러너를 구성할 필요가 있다. 아래의 단계를 수행하시오.  
 

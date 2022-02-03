@@ -7,7 +7,7 @@ title : 안드로이드 테스트 코드 기본
 로컬테스트와 실제 에뮬레이터가 디바이스를 동작시켜 테스트 하는 계측 테스트로 나뉘는데 해당 디렉토리에
 작성함으로 각자에 맞는 테스트를 진행할 수 있게된다.
 
-### 로컬 단위 테스트(Local Test) vs 계측테스트 (Instruments Test)
+### 로컬 단위 테스트(Local Test) vs 계측 테스트 (Instruments Test)
 
 안드로이드 프로젝트를 만들고 나면 기본 main, test,  androidTest 라는 폴더로 source sets 이 구성된다.
 
