@@ -1,5 +1,5 @@
 <p>
-  <a href="https://anheung.github.io/AnHeung/" target="_blank"><img src="https://img.shields.io/badge/Tech-Blog-blue?style=flat-square&logo=GitHub%20Sponsors&logoColor=white"/></a>
+  <a href="https://anheung.github.io/AnHeung/" target="_blank"><img src="https://img.shields.io/badge/TechBlog-blue?style=flat-square&logo=GitHub&logoColor=white"/></a>
   <a href="mailto:gskebin4@gmail.com" target="_blank"><img src="https://img.shields.io/badge/gskebin4@gmail.com-EA4335?style=flat-square&logo=Gmail&logoColor=white"/></a>
 </p>
 
