@@ -20,7 +20,6 @@
   <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=black"/>
 </p>
 
-#### Tech Blog: 🙊 [![Tech Blog Badge](https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white)](https://anheung.github.io/) 
 	
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Anheung&layout=compact&hide=css,html)](https://github.com/anuraghazra/github-readme-stats)
  
