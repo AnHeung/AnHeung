@@ -6,7 +6,7 @@
 👋&nbsp;안녕하세요 저는 Kotlin 과 Flutter 를 사용해 안드로이드 앱 개발을 하고 있습니다.💖
 
 #### 💻 Skills 
-*  #### Language: ![Java](https://img.shields.io/badge/Java-ED8B00?style=flat&logo=java&logoColor=white) ![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?&style=flat&logo=kotlin) ![Dart](https://img.shields.io/badge/Dart-0175C2?style=flat&logo=dart&logoColor=white) ![Javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black) ![NODE.JS](https://img.shields.io/badge/Node.js-43853D?style=flat&logo=node.js&logoColor=white)
+* #### Language: ![Java](https://img.shields.io/badge/Java-ED8B00?style=flat&logo=java&logoColor=white) ![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?&style=flat&logo=kotlin) ![Dart](https://img.shields.io/badge/Dart-0175C2?style=flat&logo=dart&logoColor=white) ![Javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black) ![NODE.JS](https://img.shields.io/badge/Node.js-43853D?style=flat&logo=node.js&logoColor=white)
 * #### Framework: ![Flutter](https://img.shields.io/badge/Android-3DDC84?style=flat&logo=android&logoColor=white) ![Flutter](https://img.shields.io/badge/Flutter-02569B?style=flat&logo=flutter&logoColor=white) ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=spring&logoColor=white) 
 * #### Database: ![mongodb](https://img.shields.io/badge/MongoDB-4EA94B?style=flat&logo=mongodb&logoColor=white) 
 
