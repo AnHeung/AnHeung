@@ -1,3 +1,8 @@
+<p>
+  <a href="https://anheung.github.io/AnHeung/" target="_blank"><img src="https://img.shields.io/badge/Blog-blue?style=flat-square&logo=GitHub%20Sponsors&logoColor=white"/></a>
+  <a href="mailto:gskebin4@gmail.com" target="_blank"><img src="https://img.shields.io/badge/gskebin4@gmail.com-EA4335?style=flat-square&logo=Gmail&logoColor=white"/></a>
+</p>
+
 👋&nbsp;안녕하세요 저는 Kotlin 과 Flutter 를 사용해 안드로이드 앱 개발을 하고 있습니다.💖
 
 #### 🐻 Skills 
